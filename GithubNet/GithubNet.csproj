@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>GithubNet</Title>
+    <Version>0.1</Version>
+    <Authors>liebki</Authors>
+    <Description>This library allows you to retrieve trending GitHub repositories and their information.</Description>
+    <Copyright>liebki</Copyright>
+    <PackageProjectUrl>github.com/liebki/githubnet</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>github.com/liebki/githubnet</RepositoryUrl>
+    <PackageTags>github, crawler, github-trends, crawling, microsoft, git</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageId>GithubDataNet</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CssSelectors.Core.HtmlAgilityPack" Version="1.0.4" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+	</ItemGroup>
+
+</Project>

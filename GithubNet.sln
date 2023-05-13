@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubNetDemo", "GithubNetDemo\GithubNetDemo.csproj", "{3CDBD8B6-80CC-44BC-B4D4-7BBE7A1F62F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubNet", "GithubNet\GithubNet.csproj", "{F190FF77-2F1D-42F3-A3C9-07214616BFFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{46C0F91F-23FE-4E43-9F4B-484D96B18086}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CDBD8B6-80CC-44BC-B4D4-7BBE7A1F62F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CDBD8B6-80CC-44BC-B4D4-7BBE7A1F62F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CDBD8B6-80CC-44BC-B4D4-7BBE7A1F62F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CDBD8B6-80CC-44BC-B4D4-7BBE7A1F62F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F190FF77-2F1D-42F3-A3C9-07214616BFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F190FF77-2F1D-42F3-A3C9-07214616BFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F190FF77-2F1D-42F3-A3C9-07214616BFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F190FF77-2F1D-42F3-A3C9-07214616BFFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21AEC107-E182-405B-A29D-2B1CE629AF7A}
+	EndGlobalSection
+EndGlobal
