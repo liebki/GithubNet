@@ -1,4 +1,6 @@
-﻿namespace GithubNet
+﻿using GithubNet.Models;
+
+namespace GithubNet
 {
     public class GithubNetClient
     {
@@ -7,6 +9,18 @@
             if (!string.IsNullOrEmpty(customQuery) && customQuery.Contains("https://github.com/trending", StringComparison.InvariantCultureIgnoreCase))
             {
                 return await GithubNetManager.GetAllTrendEntries(loadTrendItemDetails, customQuery);
+            }
+            else
+            {
+                throw new ArgumentException("The parameter customquery, can't be whitespace, null or empty also it has to contain some kind of https://github.com/trending-url string!");
+            }
+        }
+
+        public async Task<Repository> GetRepositoryInfoAsync(string repositoryLink)
+        {
+            if (!string.IsNullOrEmpty(repositoryLink) && repositoryLink.StartsWith("https://github.com/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return await GithubNetManager.GetRepositoryInfo(repositoryLink);
             }
             else
             {

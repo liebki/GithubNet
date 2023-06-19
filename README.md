@@ -4,6 +4,7 @@
 
 GithubNet is a C# library that allows you to retrieve trending GitHub repositories and their information. Currently, it provides functionality to fetch the trending repositories and their details. The library is built using .NET Core 7 and will be available as a NuGet package.
 
+
 ## Technologies
 
 - C# 
@@ -11,40 +12,41 @@ GithubNet is a C# library that allows you to retrieve trending GitHub repositori
 - [HtmlAgilityPack](https://www.nuget.org/packages/HtmlAgilityPack)
 - [CssSelectors.Core.HtmlAgilityPack](https://www.nuget.org/packages/CssSelectors.Core.HtmlAgilityPack)
 
+
 ## Features
 
-- Retrieve trending GitHub repositories
-- Access detailed information for each repository, including:
-  - User
-  - Repository link
-  - Repository name
-  - Description
-  - Total stars
-  - Total forks
-  - Programming language
-  - Availability of details
-  - Archival status
-  - Availability of project URL
-  - Project URL
-  - Availability of topics
-  - Topics
-  - Last commit time
-  - Last commit URL
+Both the `Repository` and `TrendItem` classes inherit from a base class named `ItemBase`. The `ItemBase` class includes the following common properties:
 
-## Logo
+- `User` (string): The username or owner of the repository.
+- `RespositoryLink` (string): The URL or link to the repository.
+- `RespositoryName` (string): The name of the repository.
+- `Description` (string): A brief description or summary of the repository.
+- `TotalStars` (integer): Indicates the total number of stars or favorites received by the repository.
+- `TotalForks` (integer): Represents the total number of forks or copies of the repository.
+- `HasProjectUrl` (boolean): Indicates whether the repository has a project URL.
+- `ProjectUrl` (string): The URL or link to the project associated with the repository, if available.
+- `HasTopics` (boolean): Indicates whether the repository has topics associated with it.
+- `Topics` (string[]): An array of strings representing the topics or tags associated with the repository.
 
-The logo, which is used for the nuget-package was created by: https://uxwing.com
+The `Repository` class includes additional properties specific to repositories:
+
+- `OpenIssuesNumber` (integer): Represents the number of open issues in the repository.
+- `OpenPullRequestsNumber` (integer): Indicates the number of open pull requests in the repository.
+- `TotalCommitsNumber` (integer): Represents the total number of commits made in the repository.
+- `TotalContributorsNumber` (integer): Indicates the total number of contributors to the repository.
+
+The `TrendItem` class includes additional properties specific to trend items:
+
+- `Programminglanguage` (string): The main programming language associated with the trend item.
+- `HasDetails` (boolean): Indicates whether it's an intense crawl, where each repository is individually crawled.
+- `IsArchived` (boolean): Indicates whether the repository associated with the trend item is archived.
+- `LastCommitTime` (string): The timestamp or time of the last commit made to the repository.
+- `LastCommitUrl` (string): The URL or link to the last commit made in the repository.
+
 
 ## Usage
 
-To use the GithubNet library, follow these steps:
-
-1. Create an instance of the `GithubNetClient` class.
-2. Use the `GetTrendItemsAsync` method to retrieve a list of `TrendItem` objects representing trending repositories. You can optionally specify the `loadTrendItemDetails` parameter as `true` to load all the available details, but note that this process can be time-consuming as it crawls through each page.
-3. If needed, you can use the `GetTrendItemDetailsAsync` method to fetch additional details for a specific `TrendItem` object.
-4. Use the `GetTopicUrlFromTopicName` method to obtain the GitHub URL for a given topic.
-
-The following methods are described in the text:
+The following methods can be used:
 
 - `GetTrendItemsAsync`: This method retrieves a list of `TrendItem` objects representing trending repositories. It returns the list asynchronously and can optionally load all available details if the `loadTrendItemDetails` parameter is set to `true`.
 
@@ -52,9 +54,13 @@ The following methods are described in the text:
 
 - `GetTopicUrlFromTopicName`: This method allows you to obtain the GitHub URL for a given topic. It takes the topic name as input and returns the corresponding URL.
 
+- `GetRepositoryInfoAsync`: This method retrieves detailed information about a specific GitHub repository. It provides details such as the number of contributors, the number of open issues, and more. The method returns the repository information asynchronously.
+
+
 ## Example
 
 For a demonstration of the library's functionality, refer to the included `GithubNetDemo` project. It showcases the console output of the crawled data using the `GetTrendItemsAsync` method.
+
 
 ## License
 
@@ -62,17 +68,19 @@ GithubNet is licensed under the GNU General Public License v3.0.
 
 You can read the full license details of the GNU General Public License v3.0 [here](https://choosealicense.com/licenses/gpl-3.0/).
 
+
 ## Roadmap
 
 The roadmap for future development includes the following planned features:
 
-1. `GetRepositoryInfoAsync`: Implement a method to retrieve detailed information about a specific GitHub repository. This method will provide details such as the repository owner, description, stars, forks, programming language, and other relevant information.
+- Reduce the redundant code in the `GithubNetManager` class!
 
-2. `GetUserInfoAsync`: Develop a method to fetch information about a GitHub user. This method will allow users to retrieve details such as the user's name, bio, location, profile picture, number of followers, number of repositories, and other relevant information.
+- `GetUserInfoAsync`: Develop a method to fetch information about a GitHub user. This method will allow users to retrieve details such as the user's name, bio, location, profile picture, number of followers, number of repositories, and other relevant information.
 
-3. `GetAllTopicsAsync`: Create a method to fetch all available topics from the GitHub Topics page (https://github.com/topics). This method will provide a list of topics along with their corresponding URLs and other relevant information.
+- `GetAllTopicsAsync`: Create a method to fetch all available topics from the GitHub Topics page (https://github.com/topics). This method will provide a list of topics along with their corresponding URLs and other relevant information.
 
-4. `GetAllCollectionsAsync`: Implement a method to retrieve information about the GitHub Collections page (https://github.com/collections). This method will allow users to obtain a list of collections, including their titles, descriptions, URLs, and other relevant details.
+- `GetAllCollectionsAsync`: Implement a method to retrieve information about the GitHub Collections page (https://github.com/collections). This method will allow users to obtain a list of collections, including their titles, descriptions, URLs, and other relevant details.
+
 
 ## Disclaimer
 

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>GithubNet</Title>
-    <Version>0.1</Version>
+    <Version>0.2</Version>
     <Authors>liebki</Authors>
     <Description>This library allows you to retrieve trending GitHub repositories and their information.</Description>
     <Copyright>liebki</Copyright>
@@ -18,6 +18,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageIcon>icon.png</PackageIcon>
     <PackageId>GithubDataNet</PackageId>
+    <PackageReleaseNotes>The update includes a new GetRepositoryInfoAsync() method for retrieving detailed information about GitHub repositories, a 'Repository' class to support it, and improved data types (TotalStars and TotalForks changed to integers).</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

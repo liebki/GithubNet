@@ -1,4 +1,5 @@
 ﻿using GithubNet;
+using GithubNet.Models;
 
 namespace GithubNetDemo
 {
@@ -8,8 +9,10 @@ namespace GithubNetDemo
         {
             GithubNetClient client = new();
 
-            List<TrendItem> testEntries = await client.GetTrendItemsAsync();
+            Repository tinygrad = await client.GetRepositoryInfoAsync("https://github.com/liebki/GithubNet");
+            Console.WriteLine(tinygrad.ToString());
 
+            List<TrendItem> testEntries = await client.GetTrendItemsAsync();
             foreach (TrendItem entry in testEntries)
             {
                 Console.WriteLine();
