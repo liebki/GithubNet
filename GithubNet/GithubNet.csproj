@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,19 +6,19 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>GithubNet</Title>
-    <Version>0.2</Version>
+    <Version>0.3</Version>
     <Authors>liebki</Authors>
-    <Description>This library allows you to retrieve trending GitHub repositories and their information.</Description>
+    <Description>Github(Data)Net is a simple C# library, using HtmlAgilityPack to retrieve several things from GitHub, things like trending repositories, profiles of users, the repositories of users and related information.</Description>
     <Copyright>liebki</Copyright>
     <PackageProjectUrl>github.com/liebki/githubnet</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>github.com/liebki/githubnet</RepositoryUrl>
-    <PackageTags>github, crawler, github-trends, crawling, microsoft, git</PackageTags>
+    <RepositoryUrl>https://github.com/liebki/githubnet</RepositoryUrl>
+    <PackageTags>github, crawler, github-trends, crawling, microsoft, git, htmlagilitypack</PackageTags>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageIcon>icon.png</PackageIcon>
     <PackageId>GithubDataNet</PackageId>
-    <PackageReleaseNotes>The update includes a new GetRepositoryInfoAsync() method for retrieving detailed information about GitHub repositories, a 'Repository' class to support it, and improved data types (TotalStars and TotalForks changed to integers).</PackageReleaseNotes>
+    <PackageReleaseNotes>Reworked everything, new methods, new types, new structure and new README..</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +38,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CssSelectors.Core.HtmlAgilityPack" Version="1.0.4" />
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
 	</ItemGroup>
 
 </Project>

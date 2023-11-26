@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
+	<Description>Github(Data)Net is a simple C# library, using HtmlAgilityPack to retrieve several things from GitHub, things like trending repositories, profiles of users, the repositories of users and related information.</Description>
+	<PackageReleaseNotes>New example code</PackageReleaseNotes>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
