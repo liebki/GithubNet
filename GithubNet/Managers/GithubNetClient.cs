@@ -1,8 +1,4 @@
-﻿using GithubNet.Models.Extra;
-using GithubNet.Models.Repositories;
-using GithubNet.Models.Userprofiles;
-
-namespace GithubNet.Managers
+﻿namespace GithubNet
 {
     public class GithubNetClient
     {

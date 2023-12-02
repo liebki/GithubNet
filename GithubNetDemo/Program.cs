@@ -1,7 +1,4 @@
-﻿using GithubNet.Managers;
-using GithubNet.Models.Extra;
-using GithubNet.Models.Repositories;
-using GithubNet.Models.Userprofiles;
+﻿using GithubNet;
 
 namespace GithubNetDemo
 {
@@ -17,10 +14,6 @@ namespace GithubNetDemo
                 Console.WriteLine(it);
                 Console.WriteLine("\n");
             }
-
-
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
             Console.WriteLine("\n");
 
 
@@ -31,10 +24,6 @@ namespace GithubNetDemo
                 Console.WriteLine(it);
                 Console.WriteLine("\n");
             }
-
-
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
             Console.WriteLine("\n");
 
 
@@ -45,10 +34,6 @@ namespace GithubNetDemo
                 Console.WriteLine(it);
                 Console.WriteLine("\n");
             }
-
-
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
             Console.WriteLine("\n");
 
 
@@ -66,30 +51,18 @@ namespace GithubNetDemo
                 Console.WriteLine(it);
                 Console.WriteLine("\n");
             }
-
-
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
             Console.WriteLine("\n");
 
 
 
             FullUserprofile fullUserprofile = client.GetFullUserprofile("liebki");
             Console.Write(fullUserprofile.ToString());
-
-
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
             Console.WriteLine("\n");
 
 
 
             FullRepository fullRepository = client.GetFullRepository("https://github.com/bgstaal/multipleWindow3dScene");
             Console.Write(fullRepository.ToString());
-
-
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
             Console.WriteLine("\n");
 
 

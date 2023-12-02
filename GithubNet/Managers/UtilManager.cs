@@ -1,13 +1,11 @@
-﻿using GithubNet.Models.Extra;
-using GithubNet.Models.Repositories;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace GithubNet.Managers
+namespace GithubNet
 {
     internal static class UtilManager
     {
@@ -62,7 +60,7 @@ namespace GithubNet.Managers
             return url.StartsWith("https://github.com/") && url.Count(c => c == '/') >= 4;
         }
 
-        internal static HtmlDocument GetHtmlDoc(string Url, bool IsGithubPage = false)
+        internal static (HtmlDocument htmlDocument, string finalUrl) GetHtmlDoc(string Url, bool IsGithubPage = false)
         {
             string RequestUrl = Url;
             if (!Url.StartsWith("https://github.com") && IsGithubPage)
@@ -76,7 +74,7 @@ namespace GithubNet.Managers
             };
 
             HtmlDocument PageDocument = Page.Load(RequestUrl);
-            return PageDocument;
+            return (PageDocument, RequestUrl);
         }
 
         internal static int ParseNumberValue(string value)

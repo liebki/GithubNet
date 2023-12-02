@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 
-namespace GithubNet.Models.Repositories
+namespace GithubNet
 {
     public class FullRepository : RepositoryBase
     {
-        public FullRepository(string projectUrl, int openIssueCount, int openPullRequestsCount, int totalCommitsCount, string lastCommitText, int watcherCount, int contributorCount, string[] topics, int releaseCount, string lastReleaseText, int tagCount, int branchCount, string defaultBranchName, string mainLanguage, int totalStars, int totalForks, string username, string repositoryName, string description) : base(mainLanguage, totalStars, totalForks, username, repositoryName, description)
+        public FullRepository(string projectUrl, int openIssueCount, int openPullRequestsCount, int totalCommitsCount, string lastCommitText, int watcherCount, int contributorCount, string[] topics, int releaseCount, string lastReleaseText, int tagCount, int branchCount, string defaultBranchName, string url, string mainLanguage, int totalStars, int totalForks, string username, string repositoryName, string description) : base(url, mainLanguage, totalStars, totalForks, username, repositoryName, description)
         {
             ProjectUrl = projectUrl;
             OpenIssueCount = openIssueCount;
@@ -48,9 +48,29 @@ namespace GithubNet.Models.Repositories
 
         public string DefaultBranchName { get; set; }
 
+        public string GetLastCommitUrl(string branch = "")
+        {
+            if (string.IsNullOrEmpty(branch))
+            {
+                return $"https://github.com/{this.Username}/{this.RepositoryName}/commit/{this.DefaultBranchName}";
+            }
+
+            return $"https://github.com/{this.Username}/{this.RepositoryName}/commit/{branch}";
+        }
+
+        public override string GetReadMeUrl(string branch = "")
+        {
+            if (string.IsNullOrEmpty(branch))
+            {
+                return $"https://raw.githubusercontent.com/{this.Username}/{this.RepositoryName}/{this.DefaultBranchName}/README.md";
+            }
+
+            return $"https://raw.githubusercontent.com/{this.Username}/{this.RepositoryName}/{branch}/README.md";
+        }
+
         public override string ToString()
         {
-            return $"{{{nameof(ProjectUrl)}={ProjectUrl}, {nameof(OpenIssueCount)}={OpenIssueCount.ToString()}, {nameof(OpenPullRequestsCount)}={OpenPullRequestsCount.ToString()}, {nameof(TotalCommitsCount)}={TotalCommitsCount.ToString()}, {nameof(LastCommitText)}={LastCommitText}, {nameof(WatcherCount)}={WatcherCount.ToString()}, {nameof(ContributorCount)}={ContributorCount.ToString()}, {nameof(Topics)}={string.Join(",", Topics)}, {nameof(ReleaseCount)}={ReleaseCount.ToString()}, {nameof(LastReleaseText)}={LastReleaseText}, {nameof(TagCount)}={TagCount.ToString()}, {nameof(BranchCount)}={BranchCount.ToString()}, {nameof(DefaultBranchName)}={DefaultBranchName}, {nameof(MainLanguage)}={MainLanguage}, {nameof(TotalStars)}={TotalStars.ToString()}, {nameof(TotalForks)}={TotalForks.ToString()}, {nameof(Username)}={Username}, {nameof(RepositoryName)}={RepositoryName}, {nameof(Description)}={Description}}}";
+            return $"{{{nameof(ProjectUrl)}={ProjectUrl}, {nameof(OpenIssueCount)}={OpenIssueCount.ToString()}, {nameof(OpenPullRequestsCount)}={OpenPullRequestsCount.ToString()}, {nameof(TotalCommitsCount)}={TotalCommitsCount.ToString()}, {nameof(LastCommitText)}={LastCommitText}, {nameof(WatcherCount)}={WatcherCount.ToString()}, {nameof(ContributorCount)}={ContributorCount.ToString()}, {nameof(Topics)}={Topics}, {nameof(ReleaseCount)}={ReleaseCount.ToString()}, {nameof(LastReleaseText)}={LastReleaseText}, {nameof(TagCount)}={TagCount.ToString()}, {nameof(BranchCount)}={BranchCount.ToString()}, {nameof(DefaultBranchName)}={DefaultBranchName}, {nameof(Url)}={Url}, {nameof(MainLanguage)}={MainLanguage}, {nameof(TotalStars)}={TotalStars.ToString()}, {nameof(TotalForks)}={TotalForks.ToString()}, {nameof(Username)}={Username}, {nameof(RepositoryName)}={RepositoryName}, {nameof(Description)}={Description}}}";
         }
     }
 }

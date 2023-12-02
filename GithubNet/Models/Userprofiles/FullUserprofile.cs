@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace GithubNet.Models.Userprofiles
+namespace GithubNet
 {
     public class FullUserprofile : LightUserprofile
     {

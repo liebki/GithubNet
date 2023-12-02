@@ -1,11 +1,8 @@
-﻿using GithubNet.Models.Extra;
-using GithubNet.Models.Repositories;
-using GithubNet.Models.Userprofiles;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using System;
 using System.Net;
 
-namespace GithubNet.Managers
+namespace GithubNet
 {
     public static class GithubNetManager
     {
@@ -15,7 +12,7 @@ namespace GithubNet.Managers
         internal static List<string> GetAllTrendRepositoryUrls(string CustomTrendingQuery)
         {
             List<string> TrendRepositoryUrlList = new();
-            HtmlDocument GithubPageDocument = UtilManager.GetHtmlDoc(CustomTrendingQuery, true);
+            (HtmlDocument GithubPageDocument, string _) = UtilManager.GetHtmlDoc(CustomTrendingQuery, true);
 
             IEnumerable<HtmlNode> DocumentNodes = GithubPageDocument.QuerySelectorAll("article.Box-row");
             foreach (HtmlNode docNode in DocumentNodes)
@@ -46,7 +43,7 @@ namespace GithubNet.Managers
         internal static List<TrendRepository> GetAllTrendRepositories(string CustomTrendingQuery = "https://github.com/trending")
         {
             List<TrendRepository> TrendingRepositoriesList = new();
-            HtmlDocument GithubPageDocument = UtilManager.GetHtmlDoc(CustomTrendingQuery, true);
+            (HtmlDocument GithubPageDocument, string _) = UtilManager.GetHtmlDoc(CustomTrendingQuery, true);
 
             IEnumerable<HtmlNode> DocumentNodes = GithubPageDocument.QuerySelectorAll("article.Box-row");
             foreach (HtmlNode docNode in DocumentNodes)
@@ -99,7 +96,7 @@ namespace GithubNet.Managers
                         }
                     }
 
-                    TrendRepository repository = new(TotalStarsFiltered, ProgrammingLanguage, TotalForksFiltered, StarsTodayFiltered, UsernameFiltered, RepositoryName, DescriptionFiltered);
+                    TrendRepository repository = new(TotalStarsFiltered, RepositoryLinkFiltered, ProgrammingLanguage, TotalForksFiltered, StarsTodayFiltered, UsernameFiltered, RepositoryName, DescriptionFiltered);
                     TrendingRepositoriesList.Add(repository);
                 }
                 catch (Exception e)
@@ -156,8 +153,8 @@ namespace GithubNet.Managers
             (LightUserprofile profileObj, _) = GetUserprofileData(Username);
             LightUserprofile lightUserprofile = profileObj;
 
-            HtmlDocument UserRepositoriesDocument = UtilManager.GetHtmlDoc($"https://github.com/{Username}?tab=repositories", true);
-            HtmlNode UserRepositoriesNode = UserRepositoriesDocument.DocumentNode;
+            (HtmlDocument LightUserAndRepositoryDocument, string _) = UtilManager.GetHtmlDoc($"https://github.com/{Username}?tab=repositories", true);
+            HtmlNode UserRepositoriesNode = LightUserAndRepositoryDocument.DocumentNode;
 
             IEnumerable<HtmlNode> RawUserRepositoriesList = UserRepositoriesNode.QuerySelectorAll("li.col-12");
             List<UserRepository> UserRepositoriesList = new();
@@ -166,6 +163,12 @@ namespace GithubNet.Managers
             {
                 HtmlNode nameNode = repo.SelectSingleNode(".//h3/a");
                 string name = (nameNode != null && !string.IsNullOrEmpty(nameNode.InnerText.Trim())) ? nameNode.InnerText.Trim() : "None";
+
+                string repoUrl = "None";
+                if (nameNode != null)
+                {
+                    repoUrl = $"https://github.com{UtilManager.ClearStrings(nameNode.Attributes["href"].Value)}";
+                }
 
                 HtmlNode descriptionNode = repo.SelectSingleNode(".//p[@itemprop='description']");
                 string description = (descriptionNode != null && !string.IsNullOrEmpty(descriptionNode.InnerText.Trim())) ? descriptionNode.InnerText.Trim() : "None";
@@ -196,7 +199,7 @@ namespace GithubNet.Managers
                 HtmlNode lastUpdateNode = repo.SelectSingleNode(".//relative-time/@datetime");
                 string lastUpdate = (lastUpdateNode != null && !string.IsNullOrEmpty(lastUpdateNode.GetAttributeValue("datetime", string.Empty).Trim())) ? lastUpdateNode.GetAttributeValue("datetime", string.Empty).Trim() : "None";
 
-                UserRepository userRepository = new(isFork, licenseValue, lastUpdate, language, starCountValue, forkCountValue, Username, name, description);
+                UserRepository userRepository = new(isFork, licenseValue, lastUpdate, repoUrl, language, starCountValue, forkCountValue, Username, name, description);
                 UserRepositoriesList.Add(userRepository);
             }
 
@@ -210,8 +213,8 @@ namespace GithubNet.Managers
 
         internal static FullRepository GetFullRepository(string RepoUrl)
         {
-            HtmlDocument RepositoryDocument = UtilManager.GetHtmlDoc(RepoUrl, true);
-            HtmlNode RepositoryNode = RepositoryDocument.DocumentNode;
+            (HtmlDocument fullRepositoryDocument, string finalUrl) = UtilManager.GetHtmlDoc(RepoUrl, true);
+            HtmlNode RepositoryNode = fullRepositoryDocument.DocumentNode;
 
             string UsernameValue = UtilManager.GetUsernameFromGitHubUrl(RepoUrl);
 
@@ -229,6 +232,14 @@ namespace GithubNet.Managers
             if (Description != null)
             {
                 DescriptionValue = UtilManager.ClearStrings(Description.InnerHtml);
+            }
+
+            HtmlNode ProjectUrl = RepositoryNode.SelectSingleNode("/html/body/div[1]/div[4]/div/main/turbo-frame/div/div/div/div[2]/div[2]/div/div[1]/div/div/div[1]/span/a");
+            string ProjectUrlValue = "None";
+
+            if (ProjectUrl != null)
+            {
+                ProjectUrlValue = UtilManager.ClearStrings(ProjectUrl.Attributes["href"].Value);
             }
 
             HtmlNode OpenIssueCount = RepositoryNode.SelectSingleNode("//*[@id=\"issues-repo-tab-count\"]");
@@ -345,7 +356,7 @@ namespace GithubNet.Managers
                 ForksValue = UtilManager.ParseNumberValue(UtilManager.ClearStrings(Forks.InnerHtml));
             }
 
-            FullRepository fullRepository = new($"https://github.com{RepoUrl}", OpenIssueCountValue, OpenPullRequestsCountValue, TotalCommitsCountValue, LastCommitTextValue, WatcherCountValue, ContributorCountValue, TopicValues.ToArray(), ReleaseCountValue, LatestReleaseTextValue, TagCountValue, BranchCountValue, DefaultBranchNameValue, MainLanguageValue, StarsValue, ForksValue, UsernameValue, RepoNameValue, DescriptionValue);
+            FullRepository fullRepository = new(ProjectUrlValue, OpenIssueCountValue, OpenPullRequestsCountValue, TotalCommitsCountValue, LastCommitTextValue, WatcherCountValue, ContributorCountValue, TopicValues.ToArray(), ReleaseCountValue, LatestReleaseTextValue, TagCountValue, BranchCountValue, DefaultBranchNameValue, finalUrl, MainLanguageValue, StarsValue, ForksValue, UsernameValue, RepoNameValue, DescriptionValue);
             return fullRepository;
         }
 
@@ -390,7 +401,7 @@ namespace GithubNet.Managers
 
         private static IEnumerable<string> GetAllRepositorsUrls(string Username)
         {
-            HtmlDocument UserRepositoriesDocument = UtilManager.GetHtmlDoc($"https://github.com/{Username}?tab=repositories", true);
+            (HtmlDocument UserRepositoriesDocument, string _) = UtilManager.GetHtmlDoc($"https://github.com/{Username}?tab=repositories", true);
             HtmlNode UserRepositoriesNode = UserRepositoriesDocument.DocumentNode;
 
             IEnumerable<HtmlNode> UserRepositorieList = UserRepositoriesNode.QuerySelectorAll("li.col-12");
@@ -414,7 +425,7 @@ namespace GithubNet.Managers
 
         private static (LightUserprofile profil, HtmlDocument profilepage) GetUserprofileData(string Username)
         {
-            HtmlDocument GithubProfilepage = UtilManager.GetHtmlDoc($"https://github.com/{Username}", true);
+            (HtmlDocument GithubProfilepage, string _) = UtilManager.GetHtmlDoc($"https://github.com/{Username}", true);
 
             HtmlNode ProfileName = GithubProfilepage.QuerySelector(".p-name");
             string ProfileNameValue = ProfileName.InnerHtml.Trim();

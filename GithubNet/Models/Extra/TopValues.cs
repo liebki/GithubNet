@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace GithubNet.Models.Extra
+namespace GithubNet
 {
     public class TopValues
     {
