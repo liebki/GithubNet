@@ -88,6 +88,11 @@ string GetTopicUrlFromTopicName(string topicName);
 For a demonstration of the library's functionality, refer to the included `GithubNetDemo` project.
 
 
+## To-Do
+
+- Crawl every repository from a user, currently only the first page is crawled so these are not all repositories of a user.
+
+
 ## License 📜
 
 GithubNet is licensed under the GNU General Public License v3.0.

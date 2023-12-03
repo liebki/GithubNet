@@ -216,7 +216,7 @@ namespace GithubNet
             (HtmlDocument fullRepositoryDocument, string finalUrl) = UtilManager.GetHtmlDoc(RepoUrl, true);
             HtmlNode RepositoryNode = fullRepositoryDocument.DocumentNode;
 
-            string UsernameValue = UtilManager.GetUsernameFromGitHubUrl(RepoUrl);
+            string UsernameValue = RepoUrl.Split('/')[1];
 
             HtmlNode RepoName = RepositoryNode.SelectSingleNode("/html/body/div[1]/div[4]/div/main/div/div[1]/div[1]/div/strong/a");
             string RepoNameValue = "None";

@@ -55,6 +55,54 @@ namespace GithubNet
             }
         }
 
+        public static async Task<(string ReadmeContent, string UsedUrl)> FindReadme(string username, string projectname)
+        {
+            string[] ReadmeUrls = BuildUrlList(username, projectname);
+            (string ReadmeContent, string UsedUrl) readme = ("None", "None");
+
+            using HttpClient client = new();
+            foreach (string url in ReadmeUrls)
+            {
+                try
+                {
+                    if (await IsValidRequest(client, url))
+                    {
+                        string content = await client.GetStringAsync(url);
+                        readme = (content, url);
+
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
+                    //
+                }
+            }
+
+            return readme;
+        }
+
+        private static string[] BuildUrlList(string username, string projectname)
+        {
+            string[] urls = {
+                $"https://raw.githubusercontent.com/{username}/{projectname}/main/readme.md",
+                $"https://raw.githubusercontent.com/{username}/{projectname}/master/readme.md",
+                $"https://raw.githubusercontent.com/{username}/{projectname}/main/README.md",
+                $"https://raw.githubusercontent.com/{username}/{projectname}/master/README.md",
+                $"https://raw.githubusercontent.com/{username}/{projectname}/main/ReadMe.md",
+                $"https://raw.githubusercontent.com/{username}/{projectname}/master/ReadMe.md"
+            };
+
+            return urls;
+        }
+
+
+        private static async Task<bool> IsValidRequest(HttpClient client, string url)
+        {
+            HttpResponseMessage response = await client.GetAsync(url);
+            return response.IsSuccessStatusCode;
+        }
+
         private static bool IsGitHubRepositoryUrl(string url)
         {
             return url.StartsWith("https://github.com/") && url.Count(c => c == '/') >= 4;

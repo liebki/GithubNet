@@ -58,16 +58,6 @@ namespace GithubNet
             return $"https://github.com/{this.Username}/{this.RepositoryName}/commit/{branch}";
         }
 
-        public override string GetReadMeUrl(string branch = "")
-        {
-            if (string.IsNullOrEmpty(branch))
-            {
-                return $"https://raw.githubusercontent.com/{this.Username}/{this.RepositoryName}/{this.DefaultBranchName}/README.md";
-            }
-
-            return $"https://raw.githubusercontent.com/{this.Username}/{this.RepositoryName}/{branch}/README.md";
-        }
-
         public override string ToString()
         {
             return $"{{{nameof(ProjectUrl)}={ProjectUrl}, {nameof(OpenIssueCount)}={OpenIssueCount.ToString()}, {nameof(OpenPullRequestsCount)}={OpenPullRequestsCount.ToString()}, {nameof(TotalCommitsCount)}={TotalCommitsCount.ToString()}, {nameof(LastCommitText)}={LastCommitText}, {nameof(WatcherCount)}={WatcherCount.ToString()}, {nameof(ContributorCount)}={ContributorCount.ToString()}, {nameof(Topics)}={Topics}, {nameof(ReleaseCount)}={ReleaseCount.ToString()}, {nameof(LastReleaseText)}={LastReleaseText}, {nameof(TagCount)}={TagCount.ToString()}, {nameof(BranchCount)}={BranchCount.ToString()}, {nameof(DefaultBranchName)}={DefaultBranchName}, {nameof(Url)}={Url}, {nameof(MainLanguage)}={MainLanguage}, {nameof(TotalStars)}={TotalStars.ToString()}, {nameof(TotalForks)}={TotalForks.ToString()}, {nameof(Username)}={Username}, {nameof(RepositoryName)}={RepositoryName}, {nameof(Description)}={Description}}}";

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>GithubNet</Title>
-    <Version>0.3</Version>
+    <Version>0.3.2</Version>
     <Authors>liebki</Authors>
     <Description>Github(Data)Net is a simple C# library, using HtmlAgilityPack to retrieve several things from GitHub, things like trending repositories, profiles of users, the repositories of users and related information.</Description>
     <Copyright>liebki</Copyright>
@@ -18,7 +18,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageIcon>icon.png</PackageIcon>
     <PackageId>GithubDataNet</PackageId>
-    <PackageReleaseNotes>Reworked everything, new methods, new types, new structure and new README..</PackageReleaseNotes>
+    <PackageReleaseNotes>New GetReadmeAuto() method, fixed the username in the GetFullRepository() method and changed the standard GetReadMeUrl() method..</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

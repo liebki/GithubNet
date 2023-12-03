@@ -30,9 +30,15 @@ namespace GithubNet
 
         public string Description { get; set; }
 
-        public virtual string GetReadMeUrl(string branch = "")
+        public virtual string GetReadMeUrl(string branch, string readmeFile = "README.md")
         {
-            return $"https://raw.githubusercontent.com/{this.Username}/{this.RepositoryName}/{branch}/README.md";
+            return $"https://raw.githubusercontent.com/{this.Username}/{this.RepositoryName}/{branch}/{readmeFile}";
+        }
+
+        public async Task<(string ReadmeContent, string Url)> GetReadmeAuto()
+        {
+            (string Content, string Url) readme = await UtilManager.FindReadme(this.Username, this.RepositoryName);
+            return readme;
         }
 
         public string GetStarsUrl()
