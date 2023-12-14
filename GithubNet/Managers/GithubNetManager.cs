@@ -401,25 +401,37 @@ namespace GithubNet
 
         private static IEnumerable<string> GetAllRepositorsUrls(string Username)
         {
-            (HtmlDocument UserRepositoriesDocument, string _) = UtilManager.GetHtmlDoc($"https://github.com/{Username}?tab=repositories", true);
-            HtmlNode UserRepositoriesNode = UserRepositoriesDocument.DocumentNode;
-
-            IEnumerable<HtmlNode> UserRepositorieList = UserRepositoriesNode.QuerySelectorAll("li.col-12");
             List<string> RepositoryUrlList = new();
 
-            foreach (HtmlNode repository in UserRepositorieList)
+            // Set a hard limit of 100 pages, to prevent infinite loops
+            List<Task> pageTasks = new();
+            
+            for (int page = 1; page <= 100; page++)
             {
-                HtmlNode RepoName = repository.SelectSingleNode(".//h3/a");
-                string RepoUrl = "None";
+                (HtmlDocument UserRepositoriesDocument, string _) =
+                    UtilManager.GetHtmlDoc($"https://github.com/{Username}?page={page}&tab=repositories", true);
+                HtmlNode UserRepositoriesNode = UserRepositoriesDocument.DocumentNode;
 
-                if (RepoName != null)
+                var ranOutOfRepositories = UserRepositoriesNode.QuerySelector("div.blankslate");
+                if (ranOutOfRepositories != null)
+                    break;
+                
+                IEnumerable<HtmlNode> UserRepositorieList = UserRepositoriesNode.QuerySelectorAll("li.col-12");
+
+                foreach (HtmlNode repository in UserRepositorieList)
                 {
-                    RepoUrl = RepoName.Attributes["href"].Value;
+                    HtmlNode RepoName = repository.SelectSingleNode(".//h3/a");
+                    string RepoUrl = "None";
+
+                    if (RepoName != null)
+                    {
+                        RepoUrl = RepoName.Attributes["href"].Value;
+                    }
+
+                    RepositoryUrlList.Add(RepoUrl);
                 }
-
-                RepositoryUrlList.Add(RepoUrl);
             }
-
+            
             return RepositoryUrlList;
         }
 
